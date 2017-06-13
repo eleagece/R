@@ -157,5 +157,76 @@ lm(data=mydata,y-x,model=FALSE,1:100) #matching por nombre y segun el orden
 lm(y-x,mydata,1:100,model=FALSE) #matching solo por el orden
 
 #####################################################################
-# definicion, evaluacion perezosa, ...
+# evaluacion perezosa, ...
 #####################################################################
+#evaluacion perezosa
+f1 <- function(a,b)
+	{
+	a^2
+	}
+f1(2) # la evaluacion perezosa funciona bien aunque no especifiques b. ademas no hay error porque el return es la ultima instruccion del cuerpo
+f2 <- function(a,b)
+	{
+	print(a)
+	print(b)
+	}
+f2(45) #la evaluacion perezosa imprime 'a' y da error en 'b' porque b no esta definido
+#... para extender otra funcion y no repetir todos los argumentos
+myplot <- function(x,y,type="1",...)
+	{
+	plot(x,y,type=type,...)
+	}
+#... cuando no se sabe el numero de argumentos de la funcion a priori
+args(paste) #junta un numero indeterminado de argumentos
+#function (..., sep = " ", collapse = NULL) 
+args(cat) #junta e imprime un numero indeterminado de argumentos
+#function (..., file = "", sep = " ", fill = FALSE, labels = NULL, append = FALSE)
+paste("a","b",sep=":") #separa elementos por ':'
+paste("a","b",se=":") #no funciona partial match por los '...' y toma 'se' como un elemento mas de los que hay en '...'
+rm(f1,f2)
+
+#####################################################################
+# scoping
+#####################################################################
+make.power <- function(n)
+	{
+	pow <- function(x)
+		{
+		x^n
+		}
+	pow
+	}
+cube<-make.power(3)
+square<-make.power(2)
+cube(3)
+square(2)
+ls(environment(cube)) #te dice que la funcion tiene dentro 'n' y 'pow'
+get("n",environment(cube)) #te dice que 'n' vale 3
+ls(environment(sqare))
+get("n",environment(sqare))
+#en R existe el 'lexical scoping'. El valor de 'y' se busca donde se ha definido
+#y no desde donde se ha llamado a la funcion que tiene 'y'. Por tanto
+#g(x) usa y<-10 y no y<-2 (en ese caso seria 'dynamic scoping')
+y<-10
+f<-function(x)
+	{
+	y<-2
+	y^2+g(x)
+	}
+g<-function(x)
+	{
+	x*y
+	}
+#un problema del lexical scoping es qeu todos los objetos tienen que estar
+#guardados en memoria
+
+#+------------------------------------------------------------------------------------------+
+#| Hora y fecha - https://www.coursera.org/learn/r-programming/lecture/yl7BO/dates-and-times
+#+------------------------------------------------------------------------------------------+
+#TO DO
+#fecha y hora tienen clases especiales en R para tratar con ellas numerica y estadisticamente.
+#para fechas usan 'Date' y para horas usan 'POSIXct' y 'POSIXlt'.
+#si tenemos horas y fechas en formatos no propios de R podemos parsearlos usando 'strptime' o 'as.Date',
+#'as.POSIXct' y 'as.POSIXlt'
+
+
