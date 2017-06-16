@@ -6,7 +6,7 @@
 #| 'lappply' aplica una funcion a todos los elementos que se pasen y devuelve
 #| el resultado en una lista
 #+------------------------------------------------------------------------------------------+
-#ej1. aplica la media a todas los elementos de la lista y lo devuelve en otra
+#ej1. aplica la media a ttyodas los elementos de la lista y lo devuelve en otra
 #lista con los mismos nombres
 l1<-list(a=1:5,b=rnorm(10))
 lapply(l1,mean) 
